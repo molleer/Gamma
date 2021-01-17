@@ -99,15 +99,6 @@ public final class EndpointsUtils { // Doesn't return me endpoints.
                 );
     }
 
-    public static List<Endpoint> getMeEndpoints() {
-        return Arrays.asList(
-                new Endpoint("/users/me", GET),
-                new Endpoint("/users/me", PUT),
-                new Endpoint("/users/me", DELETE),
-                new Endpoint("/users/me/avatar", PUT),
-                new Endpoint("/users/me/change_password", POST));
-    }
-
     public static List<Endpoint> getNonAuthorizedEndpoints() {
         return Arrays.asList(
                 new Endpoint("/users/reset_password", POST),

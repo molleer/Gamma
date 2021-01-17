@@ -80,10 +80,6 @@ public class GroupWebsiteService extends EntityWebsiteService {
         return this.repository.findById(UUID.fromString(id)).map(GroupWebsite::toDTO).orElse(null);
     }
 
-    public void deleteGroupWebsite(String id) {
-
-    }
-
     public List<WebsiteInterfaceDTO> getWebsites(FKITGroupDTO group) {
         return this.repository.findAllByGroup(this.fkitGroupService.fromDTO(group)).stream()
                 .map(GroupWebsite::toDTO).collect(Collectors.toList());

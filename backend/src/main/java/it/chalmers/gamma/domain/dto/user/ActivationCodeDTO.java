@@ -2,7 +2,6 @@ package it.chalmers.gamma.domain.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
@@ -41,14 +40,6 @@ public class ActivationCodeDTO {
 
     public String getCode() {
         return this.code;
-    }
-
-    public Instant getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public boolean isValid() {
-        return Instant.now().isBefore(this.createdAt.plus(Duration.ofSeconds(this.passwordExpirationTime)));
     }
 
     @Override

@@ -21,20 +21,6 @@ public final class JSONUtils {
         }
     }
 
-    public static String toJsonTemplate(JSONParameter... rawParameters) {
-        List<JSONParameter> parameters = Arrays.asList(rawParameters);
-        StringBuilder builder = new StringBuilder();
-        builder.append("{\n");
-        for (JSONParameter parameter : parameters) {
-            builder.append(String.format("\"%s\": \"%s\"%s",
-                    parameter.getKey(),
-                    parameter.getValue(),
-                    parameter.equals(parameters.get(parameters.size() - 1)) ? "\n}" : ",\n"
-                    ));
-        }
-        return builder.toString();
-    }
-
     public static String toFormUrlEncoded(JSONParameter... rawParameters) {
         List<JSONParameter> parameters = Arrays.asList(rawParameters);
         StringBuilder builder = new StringBuilder();
