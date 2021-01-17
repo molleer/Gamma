@@ -38,10 +38,6 @@ public class ActivationCode {
     @Value("${password-expiration-time}")
     private static final int PASSWORD_EXPIRATION_TIME = 3600;
 
-    public Instant getCreatedAt() {
-        return this.createdAt;
-    }
-
     protected ActivationCode() {
         this.id = UUID.randomUUID();
     }
@@ -54,30 +50,6 @@ public class ActivationCode {
 
     public UUID getId() {
         return this.id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getCid() {
-        return this.cid.getCid();
-    }
-
-    public Whitelist getWhitelist() {
-        return this.cid;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setWhitelist(Whitelist cid) {
-        this.cid = cid;
-    }
-
-    public void setCid(Whitelist cid) {
-        this.cid = cid;
     }
 
     public String getCode() {
