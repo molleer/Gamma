@@ -22,7 +22,7 @@ public class ActivationCode {
 
     @Id
     @Column(updatable = false)
-    private UUID id;
+    private final UUID id;
 
     @JoinColumn(name = "cid", insertable = true, updatable = false, unique = true)
     @OneToOne(fetch = FetchType.EAGER)

@@ -161,9 +161,10 @@ public final class ITUserController {
     }
 
     @GetMapping("/{id}/avatar")
-    public void getUserAvatar(@PathVariable("id") String id, HttpServletResponse response) throws IOException {
+    public int getUserAvatar(@PathVariable("id") String id, HttpServletResponse response) throws IOException {
         ITUserDTO user = this.itUserService.getITUser(id);
         response.sendRedirect(user.getAvatarUrl());
+        return 0;
     }
 
     @PutMapping("/me")
