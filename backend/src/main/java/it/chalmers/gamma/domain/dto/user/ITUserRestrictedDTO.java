@@ -12,6 +12,7 @@ public class ITUserRestrictedDTO {
     private final String lastName;
     private final String avatarUrl;
     private final Year acceptanceYear;
+    private final boolean gdpr;
 
     public ITUserRestrictedDTO(ITUserDTO userDTO) {
         this.id = userDTO.getId();
@@ -21,6 +22,7 @@ public class ITUserRestrictedDTO {
         this.lastName = userDTO.getLastName();
         this.avatarUrl = userDTO.getAvatarUrl();
         this.acceptanceYear = userDTO.getAcceptanceYear();
+        this.gdpr = userDTO.isGdpr();
     }
 
     public UUID getId() {
@@ -51,6 +53,10 @@ public class ITUserRestrictedDTO {
         return this.acceptanceYear;
     }
 
+    public boolean isGdpr() {
+        return this.gdpr;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -60,7 +66,8 @@ public class ITUserRestrictedDTO {
             return false;
         }
         ITUserRestrictedDTO that = (ITUserRestrictedDTO) o;
-        return Objects.equals(this.id, that.id)
+        return this.gdpr == that.gdpr
+                && Objects.equals(this.id, that.id)
                 && Objects.equals(this.cid, that.cid)
                 && Objects.equals(this.nick, that.nick)
                 && Objects.equals(this.firstName, that.firstName)
@@ -71,14 +78,14 @@ public class ITUserRestrictedDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.id,
+        return Objects.hash(this.id,
                 this.cid,
                 this.nick,
                 this.firstName,
                 this.lastName,
                 this.avatarUrl,
-                this.acceptanceYear
+                this.acceptanceYear,
+                this.gdpr
         );
     }
 
@@ -91,7 +98,8 @@ public class ITUserRestrictedDTO {
                 + ", firstName='" + this.firstName + '\''
                 + ", lastName='" + this.lastName + '\''
                 + ", avatarUrl='" + this.avatarUrl + '\''
-                + ", acceptanceYear=" + this.acceptanceYear + '\''
+                + ", acceptanceYear=" + this.acceptanceYear
+                + ", gdpr=" + this.gdpr
                 + '}';
     }
 }
