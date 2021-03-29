@@ -8,6 +8,8 @@ import it.chalmers.gamma.requests.CreateGroupRequest;
 import it.chalmers.gamma.response.FileNotFoundResponse;
 import it.chalmers.gamma.response.FileNotSavedException;
 import it.chalmers.gamma.response.InputValidationFailedResponse;
+import it.chalmers.gamma.response.group.GetAllAdminGroupsResponse;
+import it.chalmers.gamma.response.group.GetFKITAdminGroupResponse;
 import it.chalmers.gamma.response.group.GroupAlreadyExistsResponse;
 import it.chalmers.gamma.response.group.GroupCreatedResponse;
 import it.chalmers.gamma.response.group.GroupDeletedResponse;
@@ -27,6 +29,7 @@ import it.chalmers.gamma.util.InputValidationUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -34,7 +37,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -75,7 +80,7 @@ public final class GroupAdminController {
     @SuppressWarnings("PMD.CyclomaticComplexity")
     @PostMapping()
     public GroupCreatedResponse addNewGroup(@Valid @RequestBody CreateGroupRequest createGroupRequest,
-                                              BindingResult result) {
+                                            BindingResult result) {
         if (result.hasErrors()) {
             throw new InputValidationFailedResponse(InputValidationUtils.getErrorMessages(result.getAllErrors()));
         }
@@ -153,6 +158,17 @@ public final class GroupAdminController {
             throw new FileNotSavedException();
         }
         return new GroupEditedResponse();
+    }
+
+    @GetMapping()
+    public GetAllAdminGroupsResponse.GetAllFKITAdminGroupsResponseObject getAllUsers() {
+        List<GetFKITAdminGroupResponse> responses = this.fkitGroupService.getGroups()
+                .stream().map(g -> new GetFKITAdminGroupResponse(
+                        g,
+                        this.membershipService.getMembershipsInGroup(g))
+                ).collect(Collectors.toList());
+
+        return new GetAllAdminGroupsResponse(responses).toResponseObject();
     }
 
     private FKITGroupDTO requestToDTO(CreateGroupRequest request) {
