@@ -1,5 +1,7 @@
 package it.chalmers.gamma.domain.dto.user;
 
+import it.chalmers.gamma.domain.Language;
+
 import java.time.Year;
 import java.util.Objects;
 import java.util.UUID;
@@ -13,6 +15,7 @@ public class ITUserRestrictedDTO {
     private final String avatarUrl;
     private final Year acceptanceYear;
     private final boolean gdpr;
+    private final Language language;
 
     public ITUserRestrictedDTO(ITUserDTO userDTO) {
         this.id = userDTO.getId();
@@ -23,6 +26,7 @@ public class ITUserRestrictedDTO {
         this.avatarUrl = userDTO.getAvatarUrl();
         this.acceptanceYear = userDTO.getAcceptanceYear();
         this.gdpr = userDTO.isGdpr();
+        this.language = userDTO.getLanguage();
     }
 
     public UUID getId() {
@@ -57,6 +61,10 @@ public class ITUserRestrictedDTO {
         return this.gdpr;
     }
 
+    public Language getLanguage() {
+        return this.language;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -73,7 +81,8 @@ public class ITUserRestrictedDTO {
                 && Objects.equals(this.firstName, that.firstName)
                 && Objects.equals(this.lastName, that.lastName)
                 && Objects.equals(this.avatarUrl, that.avatarUrl)
-                && Objects.equals(this.acceptanceYear, that.acceptanceYear);
+                && Objects.equals(this.acceptanceYear, that.acceptanceYear)
+                && Objects.equals(this.language, that.language);
     }
 
     @Override
@@ -85,7 +94,8 @@ public class ITUserRestrictedDTO {
                 this.lastName,
                 this.avatarUrl,
                 this.acceptanceYear,
-                this.gdpr
+                this.gdpr,
+                this.language
         );
     }
 
@@ -100,6 +110,7 @@ public class ITUserRestrictedDTO {
                 + ", avatarUrl='" + this.avatarUrl + '\''
                 + ", acceptanceYear=" + this.acceptanceYear
                 + ", gdpr=" + this.gdpr
+                + ", language=" + this.language
                 + '}';
     }
 }
