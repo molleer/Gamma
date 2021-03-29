@@ -171,6 +171,20 @@ public final class GroupAdminController {
         return new GetAllAdminGroupsResponse(responses).toResponseObject();
     }
 
+    @GetMapping("/active")
+    public GetAllAdminGroupsResponse.GetAllFKITAdminGroupsResponseObject getAllActiveUsers() {
+        List<GetFKITAdminGroupResponse> responses = this.fkitGroupService.getGroups()
+                .stream()
+                .filter(FKITGroupDTO::isActive)
+                .map(g -> new GetFKITAdminGroupResponse(
+                        g,
+                        this.membershipService.getMembershipsInGroup(g))
+                ).collect(Collectors.toList());
+
+        return new GetAllAdminGroupsResponse(responses).toResponseObject();
+    }
+
+
     private FKITGroupDTO requestToDTO(CreateGroupRequest request) {
         return new FKITGroupDTO(
                 request.getBecomesActive(),
