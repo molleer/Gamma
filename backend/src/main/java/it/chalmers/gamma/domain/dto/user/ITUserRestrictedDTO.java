@@ -1,8 +1,10 @@
 package it.chalmers.gamma.domain.dto.user;
 
 import it.chalmers.gamma.domain.Language;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.time.Year;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,8 +16,13 @@ public class ITUserRestrictedDTO {
     private final String lastName;
     private final String avatarUrl;
     private final Year acceptanceYear;
+
+    //Used by goldapps
     private final boolean gdpr;
+
+    //Both must for chalmers.it
     private final Language language;
+    private final List<GrantedAuthority> authorities;
 
     public ITUserRestrictedDTO(ITUserDTO userDTO) {
         this.id = userDTO.getId();
@@ -27,6 +34,7 @@ public class ITUserRestrictedDTO {
         this.acceptanceYear = userDTO.getAcceptanceYear();
         this.gdpr = userDTO.isGdpr();
         this.language = userDTO.getLanguage();
+        this.authorities = userDTO.getAuthorities();
     }
 
     public UUID getId() {
@@ -65,6 +73,10 @@ public class ITUserRestrictedDTO {
         return this.language;
     }
 
+    public List<GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -82,7 +94,8 @@ public class ITUserRestrictedDTO {
                 && Objects.equals(this.lastName, that.lastName)
                 && Objects.equals(this.avatarUrl, that.avatarUrl)
                 && Objects.equals(this.acceptanceYear, that.acceptanceYear)
-                && Objects.equals(this.language, that.language);
+                && Objects.equals(this.language, that.language)
+                && Objects.equals(this.authorities, that.authorities);
     }
 
     @Override
@@ -95,7 +108,8 @@ public class ITUserRestrictedDTO {
                 this.avatarUrl,
                 this.acceptanceYear,
                 this.gdpr,
-                this.language
+                this.language,
+                this.authorities
         );
     }
 
@@ -111,6 +125,7 @@ public class ITUserRestrictedDTO {
                 + ", acceptanceYear=" + this.acceptanceYear
                 + ", gdpr=" + this.gdpr
                 + ", language=" + this.language
+                + ", authorities=" + this.authorities
                 + '}';
     }
 }
